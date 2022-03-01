@@ -14,7 +14,8 @@ custom:
     includeLayers: true
     number: 1
   webpack:
-    packager: yarn
+    packager: npm
+    excludeFiles: src/**/*.test.js # Provide a glob for files to ignore
 
 provider:
   name: aws
