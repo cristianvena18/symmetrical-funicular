@@ -1,0 +1,34 @@
+service: sls-ts
+
+plugins:
+  - serverless-webpack
+  - serverless-iam-roles-per-function
+  - serverless-prune-plugin
+
+package:
+  individually: true
+
+custom:
+  prune:
+    automatic: true
+    includeLayers: true
+    number: 1
+  webpack:
+    packager: yarn
+
+provider:
+  name: aws
+  region: ${opt:region}
+  runtime: nodejs14.x
+
+functions:
+  myFunction:
+    name: myFunction-${opt:stage}
+    handler: src/myFunction.handler
+    package:
+      individually: true
+      patterns:
+        - '!src/**'
+        - 'src/myFunction.ts'
+    tags:
+      stage: ${opt:stage}
